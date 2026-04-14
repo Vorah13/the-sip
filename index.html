@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Sip | Café & Restaurant - Surat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8B4513;
+            --secondary: #D2691E;
+            --accent: #FF6B35;
+            --dark: #2C1810;
+            --light: #FFF8F0;
+            --cream: #F5E6D3;
+            --text: #3E2723;
+            --text-light: #6D4C41;
+            --menu-bg: #FDF5E6;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        nav.scrolled {
+            background: rgba(255, 248, 240, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            padding: 1rem 5%;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-cta {
+            background: var(--accent);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, rgba(44,24,16,0.7), rgba(139,69,19,0.5)), 
+                        url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1920') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .badge {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 2px solid white;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--dark);
+        }
+
+        /* Info Bar */
+        .info-bar {
+            background: var(--cream);
+            padding: 2rem 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .info-icon {
+            font-size: 1.5rem;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 5%;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            color: var(--primary);
+        }
+
+        /* Menu Section - Updated with categories */
+        .menu-section {
+            background: var(--menu-bg);
+            position: relative;
+        }
+
+        .menu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .menu-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .menu-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-header .subtitle {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.5rem;
+            color: var(--secondary);
+        }
+
+        .menu-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .menu-content {
+            display: none;
+        }
+
+        .menu-content.active {
+            display: block;
+        }
+
+        .menu-category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .menu-category {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid rgba(139,69,19,0.1);
+            transition: transform 0.3s;
+        }
+
+        .menu-category:hover {
+            transform: translateY(-5px);
+        }
+
+        .menu-category h3 {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .menu-list {
+            list-style: none;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 0.75rem 0;
+            border-bottom: 1px dotted rgba(139,69,19,0.2);
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-name {
+            font-weight: 500;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .item-price {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+
+        .add-on-note {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: rgba(255,107,53,0.1);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .flavor-list {
+            margin-top: 0.5rem;
+            padding-left: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .flavor-list li {
+            margin: 0.25rem 0;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 5% 2rem;
+        }
+
+        .live-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(76, 175, 80, 0.2);
+            border-radius: 50px;
+            margin-top: 1rem;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #4CAF50;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3rem; }
+            .menu-category-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <a href="#" class="logo">☕ The Sip</a>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#location">Location</a></li>
+        </ul>
+        <a href="tel:+919227107774" class="nav-cta">Call Now</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <div class="badge">
+                    <span style="color: #FFD700;">★★★★</span> 4.4 Dining
+                </div>
+                <div class="badge">🚚 Delivery Available</div>
+            </div>
+            <h1>The Sip</h1>
+            <p>Café, Coffee, Continental & More in Mota Varachha, Surat</p>
+            <div class="live-status">
+                <span class="live-dot"></span>
+                <span>Open now • Closes at 1:00 AM</span>
+            </div>
+            <div class="cta-buttons">
+                <a href="#menu" class="btn-primary">View Menu 📋</a>
+                <a href="tel:+919227107774" class="btn-secondary">Call Now 📞</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info Bar -->
+    <div class="info-bar">
+        <div class="info-item">
+            <span class="info-icon">💰</span>
+            <div>
+                <h4>Average Cost</h4>
+                <p>₹950 for two (approx.)</p>
+            </div>
+        </div>
+        <div class="info-item">
+            <span class="info-icon">🕐</span>
+            <div>
+                <h4>Timings</h4>
+                <p>9:00 AM - 1:00 AM</p>
+            </div>
+        </div>
+        <div class="info-item">
+            <span class="info-icon">📱</span>
+            <div>
+                <h4>Contact</h4>
+                <p>+91 92271 07774</p>
+            </div>
+        </div>
+        <div class="info-item">
+            <span class="info-icon">📍</span>
+            <div>
+                <h4>Location</h4>
+                <p>AR Mall, Mota Varachha</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Updated Menu Section with Actual Categories -->
+    <section class="menu-section" id="menu">
+        <div class="menu-container">
+            <div class="menu-header">
+                <h2>Beverages</h2>
+                <div class="subtitle">Menu</div>
+            </div>
+
+            <div class="menu-tabs">
+                <button class="tab-btn active" onclick="switchTab('beverages')">☕ Beverages</button>
+                <button class="tab-btn" onclick="switchTab('food')">🍽️ Food Menu</button>
+            </div>
+
+            <!-- BEVERAGES TAB -->
+            <div class="menu-content active" id="beverages">
+                <div class="menu-category-grid">
+                    
+                    <!-- HOT COFFEE -->
+                    <div class="menu-category">
+                        <h3>☕ HOT COFFEE</h3>
+                        <ul class="menu-list">
+                            <li class="menu-item">
+                                <span class="item-name">Espresso</span>
+                                <span class="item-price">₹120</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">Americano</span>
+                                <span class="item-price">₹160</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">Cappuccino *</span>
+                                <span class="item-price">₹180</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">Macchiato</span>
+                                <span class="item-price">₹170</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">Hot Cafe Mocha</span>
+                                <span class="item-price">₹190</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">Cafe latte *</span>
+                                <span class="item-price">₹170</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">Flat White</span>
+                                <span class="item-price">₹180</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">Cortardo</span>
+                                <span class="item-price">₹180</span>
+                            </li>
+                        </ul>
+                        <div class="add-on-note">
+                            * Add On Flavours +₹40
+                            <ul class="flavor-list">
+                                <li>• Hazelnut</li>
+                                <li>• Caramel</li>
+                                <li>• Vanilla</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- CAFFEINE REFRESHER -->
+                    <div class="menu-category">
+                        <h3>⚡ CAFFEINE REFRESHER</h3>
+                        <ul class="menu-list">
+                            <li class="menu-item">
+                                <span class="item-name">Espresso Tonic</span>
+                                <span class="item-price">₹220</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">Espresso Ginger Ale</span>
+                                <span class="item-price">₹230</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">Espresso Redbull</span>
+                                <span class="item-price">₹280</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">Barrel</span>
+                                <span class="item-price">₹300</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">Cold Brew Tonic</span>
+                                <span class="item-price">₹250</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">Cold Brew</span>
+                                <span class="item-price">₹200</span>
+                            </li>
+                        </ul>
+                        <div class="add-on-note">
+                            * Add On Flavours +₹40
+                            <ul class="flavor-list">
+                                <li>• Bubble Gum</li>
+                                <li>• Yuzu</li>
+                                <li>• Cranberry</li>
+                                <li>• Tropical</li>
+                                <li>• Passion Fruit</li>
+                                <li>• Green Apple</li>
+                                <li>• Sip's Special</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- FRAPPE -->
+                    <div class="menu-category">
+                        <h3>🥤 FRAPPE</h3>
+                        <ul class="menu-list">
+                            <li class="menu-item">
+                                <span class="item-name">Classic Frappe</span>
+                                <span class="item-price">₹210</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">Caramel Frappe</span>
+                                <span class="item-price">₹240</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">Irish Frappe</span>
+                                <span class="item-price">₹240</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">Mocha Frappe</span>
+                                <span class="item-price">₹250</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">Oreo Frappe</span>
+                                <span class="item-price">₹270</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">Hazelnut Frappe</span>
+                                <span class="item-price">₹240</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">Kitkat Frappe</span>
+                                <span class="item-price">₹270</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">Brownie Frappe</span>
+                                <span class="item-price">₹270</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">Biscoff Frappe</span>
+                                <span class="item-price">₹280</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">Signature Frappe</span>
+                                <span class="item-price">₹290</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- ICED LATTE -->
+                    <div class="menu-category">
+                        <h3>🧊 ICED LATTE</h3>
+                        <ul class="menu-list">
+                            <li class="menu-item">
+                                <span class="item-name">Classic Iced latte</span>
+                                <span class="item-price">₹170</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">Hazelnut Iced latte</span>
+                                <span class="item-price">₹190</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">Vanilla Iced latte</span>
+                                <span class="item-price">₹190</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">Blue Butter Iced latte</span>
+                                <span class="item-price">₹210</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">Nutella Iced latte</span>
+                                <span class="item-price">₹250</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">Biscoff Iced latte</span>
+                                <span class="item-price">₹250</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- FOOD MENU TAB -->
+            <div class="menu-content" id="food">
+                <div class="menu-category-grid">
+                    <div class="menu-category" style="grid-column: 1 / -1; text-align: center; padding: 4rem;">
+                        <h3>🍽️ Food Menu</h3>
+                        <p style="color: var(--text-light); margin-top: 1rem;">Continental • Mexican • Desserts • Shakes</p>
+                        <p style="color: var(--accent); margin-top: 1rem; font-weight: 600;">Ask staff for today's specials!</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Location Section -->
+    <section id="location" style="background: var(--cream);">
+        <div class="section-header">
+            <h2>Visit Us</h2>
+            <p>116-117, AR Mall, Near Panvel Point, Mota Varachha, Surat</p>
+        </div>
+        <div style="text-align: center;">
+            <a href="tel:+919227107774" class="btn-primary" style="display: inline-block; margin: 1rem;">📞 +91 92271 07774</a>
+            <a href="https://maps.google.com/?q=AR+Mall+Mota+Varachha+Surat" target="_blank" class="btn-secondary" style="display: inline-block; margin: 1rem; border-color: var(--primary); color: var(--primary);">📍 Get Directions</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div style="text-align: center;">
+            <h3 style="font-size: 2rem; margin-bottom: 1rem;">The Sip</h3>
+            <p>Your neighborhood café serving the finest coffee in Surat</p>
+            <p style="margin-top: 2rem; opacity: 0.7;">© 2024 The Sip. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Tab switching
+        function switchTab(tab) {
+            const buttons = document.querySelectorAll('.tab-btn');
+            const contents = document.querySelectorAll('.menu-content');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            
+            if (tab === 'beverages') {
+                document.getElementById('beverages').classList.add('active');
+                buttons[0].classList.add('active');
+            } else {
+                document.getElementById('food').classList.add('active');
+                buttons[1].classList.add('active');
+            }
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
